@@ -26,5 +26,26 @@ $(function () {
             }
         });
     });
+    // 触发切换轮播的pc和mobile
     $(window).trigger('resize');
+    // 底部提示
+    $('[data-toggle="tooltip"]').tooltip()
+    // 移动端的触摸事件
+    let startX = 0, endX = 0;
+    let carousel = $('#lk_carousel');
+    let carouselInner = $('#lk_carousel .carousel-inner')[0];
+    carouselInner.addEventListener('touchstart', function(e) {
+        startX = e.targetTouches[0].clientX;
+    });
+    carouselInner.addEventListener('touchmove', function(e) {
+        endX = e.targetTouches[0].clientX;
+        if(endX - startX > 0) {
+            // 上一张
+            carousel.carousel('prev');
+        } else if (endX - startX < 0) {
+            // 下一张
+            carousel.carousel('next');
+        }
+    });
+    console.log(carouselInner);
 })
